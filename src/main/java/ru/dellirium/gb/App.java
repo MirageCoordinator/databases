@@ -39,10 +39,14 @@ public class App {
                 switch (pieces[0]) {
                     case "цена": {
                         ResultSet rs = statement.executeQuery("SELECT cost FROM Goods WHERE title = '" + pieces[1] + "'");
+                        int i = 0;
                         while (rs.next()) {
                             System.out.println(rs.getInt(1));
+                            i++;
                         }
-
+                        if (i == 0) {
+                            System.out.println("Такого товара нет.");
+                        }
                         break;
                     }
                     case "сменитьцену":
