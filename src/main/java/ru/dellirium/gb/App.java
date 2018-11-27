@@ -36,25 +36,31 @@ public class App {
                 System.out.println("Команда: ");
                 String command = scanner.nextLine();
                 String[] pieces = command.split("\\s+");
-                if (pieces[0].equals("цена")) {
+                switch (pieces[0]) {
+                    case "цена": {
+                        ResultSet rs = statement.executeQuery("SELECT cost FROM Goods WHERE title = '" + pieces[1] + "'");
+                        while (rs.next()) {
+                            System.out.println(rs.getInt(1));
+                        }
 
-                    ResultSet rs = statement.executeQuery("SELECT cost FROM Goods WHERE title = '" + pieces[1] + "'");
-                    while (rs.next()) {
-                        System.out.println(rs.getInt(1));
+                        break;
                     }
+                    case "сменитьцену":
+                        statement.execute("UPDATE Goods SET cost = " + pieces[2] + " WHERE title = '" + pieces[1] + "'");
+                        System.out.println("Цена успешно изменена");
 
-                } else if (pieces[0].equals("сменитьцену")) {
-                    statement.execute("UPDATE Goods SET cost = " + pieces[2] + " WHERE title = '" + pieces[1] + "'");
-                    System.out.println("Цена успешно изменена");
-                } else if (pieces[0].equals("товарыпоцене")) {
-                    ResultSet rs = statement.executeQuery("SELECT * FROM Goods WHERE cost > " + pieces[1] + " AND cost < " + pieces[2] + "");
-                    while (rs.next()) {
-                        int id = rs.getInt("prodid");
-                        String title = rs.getString("title");
-                        int cost = rs.getInt("cost");
-                        System.out.println(
-                                "id " + id + ", name " + title + ", cost " + cost
-                        );
+                        break;
+                    case "товарыпоцене": {
+                        ResultSet rs = statement.executeQuery("SELECT * FROM Goods WHERE cost > " + pieces[1] + " AND cost < " + pieces[2] + "");
+                        while (rs.next()) {
+                            int id = rs.getInt("prodid");
+                            String title = rs.getString("title");
+                            int cost = rs.getInt("cost");
+                            System.out.println(
+                                    "id " + id + ", name " + title + ", cost " + cost
+                            );
+                        }
+                        break;
                     }
                 }
             }
