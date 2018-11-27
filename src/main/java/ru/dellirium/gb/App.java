@@ -68,12 +68,6 @@ public class App {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-/*        try {
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
     }
 
     static void connect() throws ClassNotFoundException, SQLException {
